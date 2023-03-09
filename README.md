@@ -50,3 +50,9 @@
 - Since the dataset is very unbalanced, I have decided to use the stratified KFold to ensure that each bin/split has the same proportions of positive and negative samples as the original dataset.
 - I have also used a combination of Tomek links and SMOTE to resample the training dataset
 - As a model, I decided to use a gradient boosting classifier since it is an ensemble model (combining several weak learners) allowing to capture complex non-linear relationships, it has built-in sample weights focussing on missclassified samples, and provides several hyperparameters, such as learning rate and maximum depth to increase its performance 
+- By simply predicting the majority class (non-fraud), one would achieve 99% accuracy due to imbalance; thus accuracy is not a very good performance metrics. Instead, I used recall and F1-score to as scoring metrics during training
+
+## Performance Evaluation
+- As stated before, accuracy is not very suitable for performance evaluation, so I have included, once again, recall, precision, and the F1-score, In addition, a confusion matrix is used to display all mispredictions made by the model 
+- Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures teh ability of a binary classification model to distinguish between positive and negative classes
+### plot and description

@@ -12,7 +12,8 @@
 ## Data Analysis
 - First, I wanted to check for the correlation between each feature and the target variable. I have included both Pearson and Spearman, in case the dataset might be skewed. This is because Pearson assumes a linear relationship between the variables, while Spearman is better at capturing non-linear monotonic relationships.
 - Since the data might be skewed, I selected some appropriate features to see if they indeed point to such conclusions. I have also used histograms to visualize my findings.
-### include snippet of subplots
+-
+![image](https://user-images.githubusercontent.com/127037803/224010269-cd2faf48-3f01-4e4c-8c70-3a8d6c1fdc35.png)
 - As seen in the plot, some of these features happen to be skewed, meaning there is an asymmetry of data with respect to the mean. The age and hour feature are only slightly skewed but the amount feature is heavly skewed. For this reason, I have chosen to use another non-parametric test to get further insights into the relationships. I selected both *age*, *amount*, and *hour* (since they seemed to be the most correlated to the target) to test for correlation using the Chi-square test. The findings confirm that all features, espcially *amount*, is highly correlated to the target variable.
 - Next, I used a boxplot displaying how the amount spend in fraudulent transactions is distributed. To shortly explain the box plot, the box is drawn from the first quartile to the third quartile. A vertical line goes through the box at the median. The whiskers go from each quartile to the upper and lower limits. The mean is a green triangle in the middle of the box and the outliers appear above and below the upper and lower limit lines as green Xs.
 
@@ -27,21 +28,23 @@
 
 ![image](https://user-images.githubusercontent.com/127037803/223984847-2c5c5d94-0999-4877-a517-54e97adf4542.png)
 - Based on this plot, the grocery and shopping category seem to be the most popular one in fraudulent transactions. On the other hand, the health&fitness and home categories don't appear very often in fraudulent transactions, despite their presence in legitemate transactions
-- Some of these categories are further categorized by the "_pos" and "_net" but to this point of writing, I did not find a valid answer. I have asked in the Kaggle forum, checked the documentation for the Sparkov generation tool. One hypothesis is that it divides transactions made online and in person but I have not data to proof this hypothesis.
+- Some of these categories are further categorized by the "_pos" and "_net" but to this point of writing, I did not find a valid answer. I have asked in the Kaggle forum, and checked the documentation for the Sparkov generation tool. One hypothesis is that it divides transactions made online and in person but I have not data to proof this hypothesis.
 - Continuing with the analysis, I chose to visualize the difference in time of transactions that fall on the same month made by using the same credit card.
 
-###plot
-- The results are
-- I also included plots of seeing if there is any relationship between the age of a person and the distance between the merchant and the card owner but they seem to match the data seen in non-fraudulent activities.
-### include both plots
+- The result is unambiguous: while the standard deviation from the mean ranges from a couple hundred to more than 4000 hours for legitemate transactions, fraudulent transactions seem to distribute over a range of a couply hours only. Outliers even cluster together at deviations of only up to five hours. This is an important insight so I added it as an additional feature to the dataset.
+- I also wanted to see if there is any relationship between the age of a person and the distance between the merchant and the card owner but they seem to match the data seen in non-fraudulent activities.
+
+![image](https://user-images.githubusercontent.com/127037803/224015017-c4166524-a1ed-4f3d-ae00-188e707e94f8.png)
+![image](https://user-images.githubusercontent.com/127037803/224012311-37943629-dc95-44aa-ba6f-e8ee3dc28fe2.png)
 ## Preprocessing for Training
-- The second part of preprocessing is meant to prepare the data for the model. The first thing to do is t oremove any irrelevant features. I also excluded any personal information like home address, name, etc., to protect the identity of the people involved (even though they are artificially generated).
+- The second part of preprocessing is meant to prepare the data for the model. The first thing to do is to remove any irrelevant features. I also excluded any personal information like home address, name, etc., to protect the identity of the people involved (even though they are artificially generated).
+- I have also deleted most information about the date, like the month or year since I didn't see any reason to believe there was a "credit card theft season" (correlation underlines that point). I have included the hour and distance in time, since it seems to be correlated.
 - One important aspect of choosing the model is making sure the target class of the dataset is balanced.
-### include plot
+
+![image](https://user-images.githubusercontent.com/127037803/224013444-bdb87924-7d8d-4443-b749-80b99f3f52e4.png)
 - In this case, however, the target class is highly unbalanced, requiring a different approach to training (especially sampling).
 - As mentioned before, outliers make up a great deal of the dataset, so it is important to handle them correctly. In this case, they are genuine data points, so removing them might result in a loss of information. Instead, they will be detected using the interquartile range and then marked to pass this information on to the model.
 - Since the model accepts numerical values only, categorical variables, such as the merchant or the job title must be encoded. In this case, one-hot encoding cannot be applied since the features are of high cardinality; target encoding is also not suitable since the dataset is highly unbalanced. Instead, frequency encodig is used.
-- In addiion, I used cyclical encoding for the month, day, and hour to provide a better represenation to the model. For example, if the days of the week (Monday, Tuesday, etc.) are encoded using numbers from 0-6 (6 being Sunday), the model would think that Monday (0) is far more distant in time than Saturday (5).
 
 ## Building the Model
 

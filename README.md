@@ -27,10 +27,11 @@
 - Another valuable insight might the preferred category in fraudulent transactions. I included the preferred category in non-fraudulent transactions for the same reason as before.
 
 ![image](https://user-images.githubusercontent.com/127037803/223984847-2c5c5d94-0999-4877-a517-54e97adf4542.png)
-- Based on this plot, the grocery and shopping category seem to be the most popular one in fraudulent transactions. On the other hand, the health&fitness and home categories don't appear very often in fraudulent transactions, despite their presence in legitemate transactions
+- Based on this plot, the grocery and shopping category seem to be the most popular one in fraudulent transactions. On the other hand, the health&fitness and home categories don't appear very often in fraudulent transactions, despite their presence in legitemate transactions.
 - Some of these categories are further categorized by the "_pos" and "_net" but to this point of writing, I did not find a valid answer. I have asked in the Kaggle forum, and checked the documentation for the Sparkov generation tool. One hypothesis is that it divides transactions made online and in person but I have not data to proof this hypothesis.
 - Continuing with the analysis, I chose to visualize the difference in time of transactions that fall on the same month made by using the same credit card.
 
+![image](https://user-images.githubusercontent.com/127037803/224032244-18c631bc-cd52-4f55-ac75-67dab0829e74.png)
 - The result is unambiguous: while the standard deviation from the mean ranges from a couple hundred to more than 4000 hours for legitemate transactions, fraudulent transactions seem to distribute over a range of a couply hours only. Outliers even cluster together at deviations of only up to five hours. This is an important insight so I added it as an additional feature to the dataset.
 - I also wanted to see if there is any relationship between the age of a person and the distance between the merchant and the card owner but they seem to match the data seen in non-fraudulent activities.
 
@@ -49,10 +50,15 @@
 ## Building the Model
 - Since the dataset is very unbalanced, I have decided to use the stratified KFold to ensure that each bin/split has the same proportions of positive and negative samples as the original dataset.
 - I have also used a combination of Tomek links and SMOTE to resample the training dataset
-- As a model, I decided to use a gradient boosting classifier since it is an ensemble model (combining several weak learners) allowing to capture complex non-linear relationships, it has built-in sample weights focussing on missclassified samples, and provides several hyperparameters, such as learning rate and maximum depth to increase its performance 
-- By simply predicting the majority class (non-fraud), one would achieve 99% accuracy due to imbalance; thus accuracy is not a very good performance metrics. Instead, I used recall and F1-score to as scoring metrics during training
+- As a model, I decided to use a gradient boosting classifier since it is an ensemble model (combining several weak learners) allowing to capture complex non-linear relationships, it has built-in sample weights focussing on missclassified samples, and provides several hyperparameters, such as learning rate and maximum depth to increase its performance.
+- By simply predicting the majority class (non-fraud), one would achieve 99% accuracy due to imbalance; thus accuracy is not a very good performance metrics. Instead, I used recall and F1-score to as scoring metrics during training.
 
 ## Performance Evaluation
 - As stated before, accuracy is not very suitable for performance evaluation, so I have included, once again, recall, precision, and the F1-score, In addition, a confusion matrix is used to display all mispredictions made by the model 
-- Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures teh ability of a binary classification model to distinguish between positive and negative classes
+- Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures teh ability of a binary classification model to distinguish between positive and negative classes.
 ### plot and description
+
+## Concolusion
+- In conclusion, this project really helped me develop my skill for analyzing data in that I had to look at each feature more carefully and deciding whether this presents valuable information or somehow correlates to the target variable.
+- For example, I have added the difference in time of transactions that fall on the same month made by using the same credit card as a separate feature (commented out after the plot), which greatly improved the model (100% on all scores for testing and training). I removed it, however, because no regularization technique (such as scaling or minimal cost-complexity pruning) was helping to reduce overfitting so I chose to simply use the unix time insead.
+- In addition, it helped me tackle the imbalance problem more efficiently. I learned new ways of resampling (e.g., combining Tomek links and SMOTE) and what models are working the best. I have added them to my notes so I will be more prepared for future problems like this one.

@@ -13,3 +13,14 @@ $$r_s = 1 - \frac{(6\sum d²)}{n(n² - 1)}$$
 $$\frac{1}{n} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3$$
 - The numerator of the formula calculates the sum of the differences between each observation and the sample mean
 - The denominator is a scaling factor that adjusts for the range of the data. If the numerator is not divided by the standard deviation, the magnitude of the skewness would be influenced by the scale of the data, making it not comparable across different datasets. Cubing the results emphasizes extreme values, making it more sensitive to the shape of the distribution
+
+# Chi-Square Test
+- The chi-square test is another nonparametric test to determine if there is a significant difference between expected and observed frequencies of categorical data. It is defined as
+$$\chi^2 = \sum_{i=1}^n\frac{(O_i - E_i)^2}{E_i}$$
+- where *O* is the observed frequency and *E* is the expected frequency. The observed frequency is the actual number of occurrences or count of the category in a dataset
+- If the observed frequencies are significantly different from the expected frequencies, it indicates that there is a significant difference between the two sets of data
+- The expected frequency is obtained by assuming that there is no association between the two variables being tested for independence and that the frequencies in each cell of the contingency table are proportional to the corresponding marginal totals
+$$E=\frac{\text{row total * }\text{column total}}{\text{grand total}}$$   
+- These values are obtained from the contingency table (also referred to as crosstab), which is a table that displays the frequency distribution of the variables. Consider the following example
+    
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1a92ba5e-db1f-40b6-bfb0-72395ab0539e/Untitled.png)

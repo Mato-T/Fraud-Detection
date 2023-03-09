@@ -47,4 +47,6 @@
 - Since the model accepts numerical values only, categorical variables, such as the merchant or the job title must be encoded. In this case, one-hot encoding cannot be applied since the features are of high cardinality; target encoding is also not suitable since the dataset is highly unbalanced. Instead, frequency encodig is used.
 
 ## Building the Model
-
+- Since the dataset is very unbalanced, I have decided to use the stratified KFold to ensure that each bin/split has the same proportions of positive and negative samples as the original dataset.
+- I have also used a combination of Tomek links and SMOTE to resample the training dataset
+- As a model, I decided to use a gradient boosting classifier since it is an ensemble model (combining several weak learners) allowing to capture complex non-linear relationships, it has built-in sample weights focussing on missclassified samples, and provides several hyperparameters, such as learning rate and maximum depth to increase its performance 

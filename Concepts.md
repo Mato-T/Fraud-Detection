@@ -14,3 +14,12 @@ $$\frac{1}{n} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3$$
 - The numerator of the formula calculates the sum of the differences between each observation and the sample mean
 - The denominator is a scaling factor that adjusts for the range of the data. If the numerator is not divided by the standard deviation, the magnitude of the skewness would be influenced by the scale of the data, making it not comparable across different datasets. Cubing the results emphasizes extreme values, making it more sensitive to the shape of the distribution
 
+# Gradient Boosting Classifier
+- The boosting algorithm basically tries to reduce the bias error which arises when models are not able to identify relevant trends in the data. Boosting tires to build a strong predictive model from the mistakes of several weaker models
+- Bagging is a concept used in the Random Forrest algorithm, where it trains base learners from independently bootstrapped subsets of the dataset. In contrast to bagging, where all base learners are trained simultaneously, boosting trains the base learners sequentially, making trees learn from the mistake of previous trees
+- The entire process can be summarized by this image:
+
+![image](https://user-images.githubusercontent.com/127037803/224346951-9fa02b57-ac9b-4db7-9e4b-7d898453516d.png)
+- 
+
+

@@ -40,76 +40,54 @@
     
 - The *p* in the original loss function is replaced by the expression above and after some transformation and simplification, the new loss function will look as follows:
     
-    $$
-    L=-\Big(y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big)
-    $$
+    $$L=-\Big(y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big)$$
     
 - Now, find $\gamma$ that minimizes the sum of losses by taking the derivative of the sum of losses with respect to $\gamma$. Note that $\gamma$ is still assumed to be the log of odds
     
-    $$
-    \frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^nL=\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^n\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\=-\sum_{i=1}^ny_i+n\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\=-\sum_{i=1}^ny_i+np
-    $$
+    $$\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^nL=\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^n\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\\\=-\sum_{i=1}^ny_i+n\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\\\=-\sum_{i=1}^ny_i+np$$
     
 - To take the derivative of the loss functions, simply use the chain rule (derivative of the nesting expression times the derivative of the nested expression). Note that the fraction is actually defined to be *p* so it can be replaced to arrive at the final solution
 - Now, to find the critical value, set the solution equal to 0 and solve for *p*. The result will be the optimal value *p* that minimizes the loss function (loss equal to 0)
     
-    $$
-    -\sum_{i=1}^ny_i+np=0\\np=\sum_{i=1}^ny_i\\p=1/n\sum_{i=1}^ny_i=\bar y
-    $$
+    $$-\sum_{i=1}^ny_i+np=0\\\\np=\sum_{i=1}^ny_i\\\\p=1/n\sum_{i=1}^ny_i=\bar y$$
     
 - In a binary classification problem *y* can either be 0 or 1. So, the mean of ***y,*** in this case, is actually the proportion of 1. As $\gamma$  is the log of odds instead of the probability *p*, it must be converted to arrive at the first prediction
     
-    $$
-    F_0(x)=\dot y=\log(\frac{\bar y}{1-\bar y})
-    $$
+    $$F_0(x)=\dot y=\log(\frac{\bar y}{1-\bar y})$$
     
 - The following steps are iterated **M**  times, where *M* denotes the number of trees created and *m* represents the index of each tree. So with the first prediction at hand, compute the effect that the prediction has on the loss function
 - This is done by taking the derivative of the loss function with respect to the previous prediction $F_{m-1}$ and multiplying it by -1. As with regression, this results in what is known to as the residuals
     
-    $$
-    r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(x)}
-    $$
+    $$r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(x)}$$
     
 - The residuals are computed for each single sample *i*. The gradient provides guidance on the directions (+/-) and the magnitude in which the loss function can be minimized by altering the prediction. Now, substituting for the actual loss function:
     
-    $$
-    r_{i, m}=\frac{\delta}{\delta\log(\text{odds})}\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\=y_i-\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\=y_i-p
-    $$
+    $$r_{i, m}=\frac{\delta}{\delta\log(\text{odds})}\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\\\=y_i-\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\\\=y_i-p$$
     
 - Again, the derivative results in the difference between the target variable and the log of odds, which is why *r* is called residuals
 - Now, a regression tree is used with all *x* features to predict the residual. The training data can be run down the first tree and the resulting prediction gets then added to previous prediction. The sum of these two values result in the new predicted target variable
 
-$$
-\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamma)\\=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^{F_{m-1}(x_i+\gamma})\Big)
-$$
+$$\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamma)\\\\=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^{F_{m-1}(x_i+\gamma})\Big)$$
 
 - Training the regression tree results in $R_{j, m}$ for $j=1, ...,J_m$, where **R** is the subset of samples that are assigned to (or predicted to be) at *j (the* terminal node; i.e., a leave in the tree) and at **m (**the tree index). *J* is the total number of leaves
 - A value $\gamma$ is needed that minimizes the loss function on each terminal node *j*. The $\sum_{x_i\in R_{j, m}}^n$term means that the loss is aggregated on all samples that belong to the subset *R* at terminal node *j*
 - The best value for $\gamma$ is found by taking the derivative of the previous equation, However, solving this equation is very difficult so an approximation of the lost function using the second-order Taylor polynomial is done instead
 - The second-order Taylor polynomial is used to approximate a function around a given point (in this case, the current model’s predictions) using its first and second derivative. This simplifies the computation done and the loss function is now being replaced by an approximation of it
     
-    $$
-    L(y_i, F_{m-1}(x_i)+\gamma)\approx L(y_i, F_{m-1}(x_i))+\frac{\delta}{\delta F}L(y_i, F_{m-1}(x_i))\gamma+1/2\frac{\delta²}{\delta F²}L(y_i, F_{m-1}(x_i))\gamma
-    $$
+    $$L(y_i, F_{m-1}(x_i)+\gamma)\approx L(y_i, F_{m-1}(x_i))+\frac{\delta}{\delta F}L(y_i, F_{m-1}(x_i))\gamma+1/2\frac{\delta²}{\delta F²}L(y_i, F_{m-1}(x_i))\gamma$$
     
 
 - The approximation for the loss function can now be placed into the formula for calculating the best prediction, $\gamma$, that minimizes the sum of losses. For this, take the derivative of the loss function with respect to $\gamma$ and the best value, of course, results in the sum of losses being 0
     
-    $$
-    \frac{\delta}{\delta \gamma}\sum_{x_i\in R_{j, m}}L(y_i, F_{m-1}(x_i))+\frac{\delta}{\delta F}L(y_i, F_{m-1}(x_i))\gamma+1/2\frac{\delta²}{\delta F²}L(y_i, F_{m-1}(x_i))\gamma=0
-    $$
+    $$\frac{\delta}{\delta \gamma}\sum_{x_i\in R_{j, m}}L(y_i, F_{m-1}(x_i))+\frac{\delta}{\delta F}L(y_i, F_{m-1}(x_i))\gamma+1/2\frac{\delta²}{\delta F²}L(y_i, F_{m-1}(x_i))\gamma=0$$
     
 - After solving this equation, the optimal value for $\gamma$ that minimizes the losses is defined to be as
     
-    $$
-    \gamma=\frac{\sum_{x_i\in R_{j, m}}(y_i-p)}{\sum_{x_i\in R_{j, m}}p(1-p)}
-    $$
+    $$\gamma=\frac{\sum_{x_i\in R_{j, m}}(y_i-p)}{\sum_{x_i\in R_{j, m}}p(1-p)}$$
     
 - With the optimal value at hand, update the prediction of the combined model $F_m$
     
-    $$
-    F_m(x)=F_{m-1}(x)+v\sum_{j=1}^{J_m}\gamma_{j, m}1(x\in R_{j, m})
-    $$
+    $$F_m(x)=F_{m-1}(x)+v\sum_{j=1}^{J_m}\gamma_{j, m}1(x\in R_{j, m})$$
     
 - The $\gamma_{j, m}1(x\in R_{j, m})$ term means that the value $\gamma$ is picked if a given sample *x* falls in the subset of *R*. As all terminal nodes are exclusive, any given sample falls into only a single terminal node and the corresponding $\gamma$  value is added to the previous prediction to make up the new
 - The *v* is the learning rate that controls the degree of contribution of the $\gamma$  prediction to the new, updated prediction $F_m$

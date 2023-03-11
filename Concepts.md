@@ -150,12 +150,16 @@ Synthetic Minority Oversampling Technique (SMOTE) works by randomly picking a po
     
 - The TPR is the proportion of positive samples that are correctly classified as positive by the model, while the FPR is the proportion of negative samples that are incorrectly classified as positive
 - The predicted probabilities of the positive class can be used to classify the instances into the positive or negative class by choosing a threshold value. For instance, if the threshold is set to 0.5, then all instances with predicted probabilities greater than or equal to 0.5 are classified as positive and the rest are classified as negative
+
     
     ![roc](https://user-images.githubusercontent.com/127037803/224483405-3b44de4a-8ef7-4f7f-a678-728e593ad27e.png)
+    
 
 - The ROC curve is a plot of the TPR versus the FPR for all possible threshold values. A random classifier would have a TPR and FPR that are both equal to the proportion of positive samples in the dataset, resulting in a diagonal line from the bottom-left to the top-right of the plot
+
     
     ![auc_roc](https://user-images.githubusercontent.com/127037803/224483410-e2876954-0a1d-4b77-9c9c-ee8f615d41a1.png)
+    
 
 - As seen in the split, the AUC-ROC is then calculated as the area under the ROC curve. The AUC-ROC ranges from 0 to 1, where a perfect classifier would have an AUC-ROC of 1, while a random classifier would have an AUC-ROC of 0.5
 

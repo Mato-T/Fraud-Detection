@@ -100,20 +100,21 @@ $$=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^
 - The *v* is the learning rate that controls the degree of contribution of the $\gamma$  prediction to the new, updated prediction $F_m$
 - The idea is to add many more trees that all add up to many small steps, getting closer to the observed target variable and resulting in lower variance. To add new trees, the whole process starts from the beginning, but this time using the new predicted value for calculating the new residuals
 
-# Tomek Links
+# Resampling
+## Tomek Links
 - Tomek links help to reduce the imbalance by identifying pairs of samples from different classes that very so close to each other in feature space, and then removing the sample from the majority class in each pair
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4a89437b-9284-44bf-b4a3-c8cba2770d11/Untitled.png)
-    
+
+  ![tomek](https://user-images.githubusercontent.com/127037803/224483385-391c65b4-12d1-4fc9-85ec-4ce41a8f0881.png)
+
 - As shown in this graph, the algorithm works by going through each sample of one class, finding the nearest neighbor that is of the opposite class, and repeating the process for the other class. Then removing the the sample from the majority class
   
 
-# SMOTE
+## SMOTE
 
 - Synthetics Minority Oversampling Technique (SMOTE) works by randomly picking a point from the minority class and computing the k-nearest neighbors for this point. Then, synthetic points are added between the chosen point and its neighbors
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e2507b5-7ffe-4172-9105-28c46471a2d9/Untitled.png)
-    
+    ![smote](https://user-images.githubusercontent.com/127037803/224483393-357809ab-48e0-4c62-9f37-8b8d7c55aeeb.png)
+
 - Smote can be effective in increasing the performance of classifiers on imbalanced datasets and is often used in combination with other techniques such as under-sampling the majority class, but in some cases, it might even decrease the performance if overused
 
 # Evaluation Metrics
@@ -149,10 +150,10 @@ $$=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^
 - The TPR is the proportion of positive samples that are correctly classified as positive by the model, while the FPR is the proportion of negative samples that are incorrectly classified as positive
 - The predicted probabilities of the positive class can be used to classify the instances into the positive or negative class by choosing a threshold value. For instance, if the threshold is set to 0.5, then all instances with predicted probability greater than or equal to 0.5 are classified as positive and the rest are classified as negative
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fb086948-074c-4750-83a4-bb54fdf8f6d8/Untitled.png)
-    
+    ![roc](https://user-images.githubusercontent.com/127037803/224483405-3b44de4a-8ef7-4f7f-a678-728e593ad27e.png)
+
 - The ROC curve is a plot of the TPR versus the FPR for all possible threshold values. A random classifier would have a TPR and FPR that are both equal to the proportion of positive samples in the dataset, resulting in a diagonal line from the bottom-left to the top-right of the plot
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/afb74337-04ac-46b8-b95b-59941723fb3b/Untitled.png)
-    
+    ![auc_roc](https://user-images.githubusercontent.com/127037803/224483410-e2876954-0a1d-4b77-9c9c-ee8f615d41a1.png)
+
 - As seen in the split, the AUC-ROC is then calculates as the area under the ROC curve. The AUC-ROC ranges from 0 to 1, where a perfect classifier would have an AUC-ROC of 1, while a random classifier would have an AUC-ROC of 0.5

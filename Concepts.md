@@ -129,14 +129,12 @@ Synthetic Minority Oversampling Technique (SMOTE) works by randomly picking a po
 ## Precision
 - Precision can help in these situations because it is about being precise when guessing. It tracks the percentage of times, when forecasting a class, that a class was right
     
-    $$\text{Precision} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false positives}}$$
-    $$= \frac{TP}{TP+FP}$$
+    $$\text{Precision} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false positives}}= \frac{TP}{TP+FP}$$
 
 ## Recall
 - Another measure is the recall measure, which is defined as the ratio of the number of true positive instances (correctly classified) to the sum of the true positive and false negative (relevant instances missed by the model). A high recall score indicates that the model is able to capture the most important information from the source text
     
-    $$\text{Recall} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false negatives}}$$
-    $$= \frac{TP}{TP+FN}$$
+    $$\text{Recall} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false negatives}}= \frac{TP}{TP+FN}$$
 
 ## F1-Score
 - Precision and recall can be maximized together using the F1-score, which ensures that one always gets the best precision and recall combined
@@ -163,9 +161,15 @@ Synthetic Minority Oversampling Technique (SMOTE) works by randomly picking a po
 
 # Sources
 https://www.manning.com/books/introducing-data-science (Every Topic Discussed)
+
 https://www.youtube.com/watch?v=xZ_z8KWkhXE (Correlation)
+
 https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5 (AUC-ROC)
+
 https://www.kdnuggets.com/2020/01/5-most-useful-techniques-handle-imbalanced-datasets.html (Resampling)
+
 https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-2-classification-d3ed8f56541e (Gradient Boost)
+
 https://www.youtube.com/watch?v=jxuNLH5dXCs (Gradient Boost)
+
 https://www.youtube.com/watch?v=StWY5QWMXCw (Gradient Boost)

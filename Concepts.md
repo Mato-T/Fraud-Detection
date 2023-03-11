@@ -160,3 +160,12 @@ $$=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^
     ![auc_roc](https://user-images.githubusercontent.com/127037803/224483410-e2876954-0a1d-4b77-9c9c-ee8f615d41a1.png)
 
 - As seen in the split, the AUC-ROC is then calculates as the area under the ROC curve. The AUC-ROC ranges from 0 to 1, where a perfect classifier would have an AUC-ROC of 1, while a random classifier would have an AUC-ROC of 0.5
+
+# Sources
+https://www.manning.com/books/introducing-data-science (Every Topic Discussed)
+https://www.youtube.com/watch?v=xZ_z8KWkhXE (Correlation)
+https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5 (AUC-ROC)
+https://www.kdnuggets.com/2020/01/5-most-useful-techniques-handle-imbalanced-datasets.html (Resampling)
+https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-2-classification-d3ed8f56541e (Gradient Boost)
+https://www.youtube.com/watch?v=jxuNLH5dXCs (Gradient Boost)
+https://www.youtube.com/watch?v=StWY5QWMXCw (Gradient Boost)

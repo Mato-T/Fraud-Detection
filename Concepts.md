@@ -100,3 +100,59 @@ $$=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^
 - The *v* is the learning rate that controls the degree of contribution of the $\gamma$  prediction to the new, updated prediction $F_m$
 - The idea is to add many more trees that all add up to many small steps, getting closer to the observed target variable and resulting in lower variance. To add new trees, the whole process starts from the beginning, but this time using the new predicted value for calculating the new residuals
 
+# Tomek Links
+- Tomek links help to reduce the imbalance by identifying pairs of samples from different classes that very so close to each other in feature space, and then removing the sample from the majority class in each pair
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4a89437b-9284-44bf-b4a3-c8cba2770d11/Untitled.png)
+    
+- As shown in this graph, the algorithm works by going through each sample of one class, finding the nearest neighbor that is of the opposite class, and repeating the process for the other class. Then removing the the sample from the majority class
+  
+
+# SMOTE
+
+- Synthetics Minority Oversampling Technique (SMOTE) works by randomly picking a point from the minority class and computing the k-nearest neighbors for this point. Then, synthetic points are added between the chosen point and its neighbors
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e2507b5-7ffe-4172-9105-28c46471a2d9/Untitled.png)
+    
+- Smote can be effective in increasing the performance of classifiers on imbalanced datasets and is often used in combination with other techniques such as under-sampling the majority class, but in some cases, it might even decrease the performance if overused
+
+# Evaluation Metrics
+## Accuracy
+- Accuracy is the simplest error measure, counting (as a percentage) how many of the predictions are correct
+    
+    $$\text{Accuracy} = \frac{\text{Number of correct predictions}}{\text{Total number of predictions}} = \frac{TP+TN}{TP+TN+FP+FN}$$
+    
+- Accuracy may cause problems when an imbalance exists between classes. For example, it may become a problem when the class is frequent or preponderant, such as in fraud detection, where most transactions are mostly legitimate with respect to a few criminal transactions
+- In these situations, machine learning algorithms tend to guess the class in favor of the preponderant class and be wrong most of the time with the minor classes
+
+## Precision
+- Precision can help in these situations because it is about being precise when guessing. It tracks the percentage of times, when forecasting a class, that a class was right. For example 10 people were classified as having cancer, 9 really did have cancer, thus precision is 90 percent
+    
+    $$\text{Precision} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false positives}} \\= \frac{TP}{TP+FP}$$
+
+## Recall
+- Another measure is the recall measure, which is defined as the ratio of the number of true positive instances (correctly classified) to the sum of the true positive and false negative (relevant instances missed by the model). A high recall score indicates that the model is able to capture the most important information from the source text
+    
+    $$\text{Recall} = \frac{\text{Number of true positives}}{\text{Number of true positives}+\text{Number of false negatives}} \\= \frac{TP}{TP+FN}$$
+
+## F1-Score
+- Precision and recall can be maximized together using the F1-score, which ensures that one always gets the best precision and recall combined
+    
+    $$\text{F1-score} = 2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision}+\text{Recall}}= \frac{2\cdot TP}{2\cdot TP + FP + FN}$$
+
+## AUC-ROC
+- Another useful metric is the Area Under The Receiver Operating Characteristic Curve (AUR-ROC). It provides a measure of the ability of a binary classification model to distinguish between positive and negative classes
+- In binary classification, the model makes a prediction for each data point, assigning it to 0 or to 1. For each possible threshold value between 0 and 1, the model calculates the true positive rate (TPR) and the false positive rate (FPR)
+    
+    $$\text{TPR}=\frac{TP}{TP+FN}\\\text{FPR}=\frac{FP}{TN+FP}$$
+    
+- The TPR is the proportion of positive samples that are correctly classified as positive by the model, while the FPR is the proportion of negative samples that are incorrectly classified as positive
+- The predicted probabilities of the positive class can be used to classify the instances into the positive or negative class by choosing a threshold value. For instance, if the threshold is set to 0.5, then all instances with predicted probability greater than or equal to 0.5 are classified as positive and the rest are classified as negative
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fb086948-074c-4750-83a4-bb54fdf8f6d8/Untitled.png)
+    
+- The ROC curve is a plot of the TPR versus the FPR for all possible threshold values. A random classifier would have a TPR and FPR that are both equal to the proportion of positive samples in the dataset, resulting in a diagonal line from the bottom-left to the top-right of the plot
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/afb74337-04ac-46b8-b95b-59941723fb3b/Untitled.png)
+    
+- As seen in the split, the AUC-ROC is then calculates as the area under the ROC curve. The AUC-ROC ranges from 0 to 1, where a perfect classifier would have an AUC-ROC of 1, while a random classifier would have an AUC-ROC of 0.5

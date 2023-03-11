@@ -32,15 +32,11 @@
     
 - The first term of the formula, $y_i\log(p)$ measures the loss when y is 1, and the second term $(1-y_i)\log(1-p)$ measures the loss when y is 0. The negative sign ensures the overall loss is positive. But instead of assuming $\gamma$ to be the predicted probability *p*, the log of odds is used to make the computation easier. The log of odds is defined to be as
     
-    $$
-    \log(\text{odds})=\log(p/(1-p))
-    $$
+    $$\log(\text{odds})=\log(p/(1-p))$$
     
 - Using this equation, solve for *p* to represent the log of odds in the loss function
     
-    $$
-    p=\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}
-    $$
+    $$p=\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}$$
     
 - The *p* in the original loss function is replaced by the expression above and after some transformation and simplification, the new loss function will look as follows:
     

@@ -62,7 +62,7 @@
 - The following steps are iterated *M* times, where *M* denotes the number of trees created and *m* represents the index of each tree. So with the first prediction at hand, compute the effect that the prediction has on the loss function
 - This is done by taking the derivative of the loss function with respect to the previous prediction, $F_{m-1}$, and multiplying it by -1. This results in what is known as the residuals
 
-$$r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(x)}$$
+  $$r_{i,m}=-\Big\[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big\]\_{F(x)=F_{m-1}(x)}$$
     
 - The residuals are computed for each single sample *i*. The gradient provides guidance on the directions (+/-) and magnitude with which the loss function can be minimized by altering the prediction. Now, substituting for the actual loss function:
     

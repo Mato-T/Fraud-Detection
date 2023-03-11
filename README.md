@@ -12,36 +12,36 @@
 - First, I wanted to check the correlation between each feature and the target variable. I included both Pearson and Spearman in case the data set might be skewed. The reason for this is that Pearson assumes a linear relationship between the variables, while Spearman is better suited to capture non-linear (monotonic) relationships.
 - Since the data may be skewed, I selected some appropriate features to see if they were indeed point to such conclusions. I also used histograms to visualize my results. 
 
-![image](https://user-images.githubusercontent.com/127037803/224010269-cd2faf48-3f01-4e4c-8c70-3a8d6c1fdc35.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224010269-cd2faf48-3f01-4e4c-8c70-3a8d6c1fdc35.png)
 - As seen in the graph, some of these features are skewed, i.e. there is an asymmetry of the data with respect to the mean. The *age* and *hour* features are only slightly skewed, while the *amount* feature is highly skewed.
 - Next, I used a boxplot that shows how the amount spent in fraudulent transactions is distributed. To briefly explain the boxplot, the box is drawn from the first quartile to the third quartile. A vertical line passes through the box at the median. Whiskers run from each quartile to the upper and lower limits. The mean is a green triangle in the center of the box and the outliers appear as green X's above and below the upper and lower boundary lines.
 
-![image](https://user-images.githubusercontent.com/127037803/223981326-5239e8bc-c286-4732-b1b4-7e691bfcc37a.png)
+  ![image](https://user-images.githubusercontent.com/127037803/223981326-5239e8bc-c286-4732-b1b4-7e691bfcc37a.png)
 - In this case, most data points are spread between the range of 300 to 900, but being closer to the first quartile. It becomes apparent that there is definetly a connection between the amount spend and fraudulent activities since the median of both target splits have a significant distance inbetween
 - Next, I took a look at the distribution of the jobs that were the most present in the fraudulent-activities split. Note that I also included the proportion of jobs in non-fraudulent activities, since a job might have a general high appearance in the dataset, making it also more likely to be present in fraud transactions, no matter the correlation.
 - This dataset includes data about different people making different transactions. Since many individuals are listed for more than one transaction, they overrepresent their profession in the dataset. For this reason, I grouped transactions based on their unique identifier (composed of credit card number, first and last name) so that the represention is not distorted.
 
-![image](https://user-images.githubusercontent.com/127037803/223982160-28e033fb-f9b6-4cdc-9ab6-761dd6d0daba.png)
+  ![image](https://user-images.githubusercontent.com/127037803/223982160-28e033fb-f9b6-4cdc-9ab6-761dd6d0daba.png)
 - I could not find a clear correlation between a job and fraudulent transactions, suggesting that anyone, regardless of profession, can be a victim of credit card theft, although the trading standards officer and the copywriter seem to be very present in fraudulent transactions, in contrast to their presence in non-fraudulent transactions (about half compared to a materials engineer), but I would not read too much into this.
 - Another valuable insight might be the preferred category in fraudulent transactions. I included the preferred category in non-fraudulent transactions for the same reason as before.
 
-![image](https://user-images.githubusercontent.com/127037803/223984847-2c5c5d94-0999-4877-a517-54e97adf4542.png)
+  ![image](https://user-images.githubusercontent.com/127037803/223984847-2c5c5d94-0999-4877-a517-54e97adf4542.png)
 - From this illustration, it can be seen that the categories "grocery" and "shopping" occur most frequently in fraudulent transactions. The "health & fitness" and "housing" categories, on the other hand, are not very common in fraudulent transactions, despite their presence in legitimate transaction.
 - Some of these categories are further categorized by "_pos" and "_net", but up to this point I have not found a clear answer to what they represent. I asked on the Kaggle forum and checked the documentation for the Sparkov generation tool. One hypothesis is that it differentiates between transactions made online and in person, but I have no data to prove this hypothesis.
 - To continue with the analysis, I decided to visualize the difference in time of transactions that fall in the same month and were made with the same credit card.
 
-![image](https://user-images.githubusercontent.com/127037803/224032244-18c631bc-cd52-4f55-ac75-67dab0829e74.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224032244-18c631bc-cd52-4f55-ac75-67dab0829e74.png)
 - The result is clear: While the standard deviation from the mean for legitimate transactions ranges from a few hundred to more than 4,000 hours, fraudulent transactions appear to be spread over a range of only a few hours. Outliers can even be found with a deviation of only up to five hours. While I find this to be an important finding, I have not included it as an additional feature in the dataset (explained later on).
 - I also wanted to see if there was a relationship between a person's age and the distance between the merchant and the cardholder, but they appear to be consistent with data observed for non-fraudulent activity, indicating no connection.
 
-![image](https://user-images.githubusercontent.com/127037803/224015017-c4166524-a1ed-4f3d-ae00-188e707e94f8.png)
-![image](https://user-images.githubusercontent.com/127037803/224012311-37943629-dc95-44aa-ba6f-e8ee3dc28fe2.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224015017-c4166524-a1ed-4f3d-ae00-188e707e94f8.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224012311-37943629-dc95-44aa-ba6f-e8ee3dc28fe2.png)
 ## Preprocessing for Training
 - The second part of the preprocessing is used to prepare the data for the model. The first thing to do is to remove all irrelevant features. I also excluded all personal information such as home address, name, etc. to protect the identity of the people involved (even if they were artificially created).
 - I also removed most information about time, such as month or year, as I saw no reason to believe that there was a "credit card theft season" (the correlation supports this point). I did include the hour and unix time as they seem to be correlated to the target variable.
 - An important aspect of choosing a model is to make sure that the target class of the data set is balanced.
 
-![image](https://user-images.githubusercontent.com/127037803/224013444-bdb87924-7d8d-4443-b749-80b99f3f52e4.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224013444-bdb87924-7d8d-4443-b749-80b99f3f52e4.png)
 - In this case, however, the target class is very unbalanced, which requires a different approach to training (especially sampling).
 - As mentioned earlier, outliers make up a large portion of the data set, so it is important to handle them properly. In this case, they are genuine data points, so removing them could result in a loss of information. Instead, they are detected using the interquartile range and then marked to pass this information to the model.
 - Since the model only accepts numeric values, categorical variables, such as the merchant or job title, must be encoded. In this case, one-hot coding cannot be used because the features have high cardinality; target coding is also not appropriate because the data set is highly imbalanced. Instead, frequency coding is used.
@@ -55,7 +55,7 @@
 - As stated before, accuracy is not very suitable for performance evaluation, so I have included, once again, recall, precision, and the F1-score. In addition, a confusion matrix is used to display all mispredictions made by the model.
 - Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures teh ability of a binary classification model to distinguish between positive and negative classes.
 
-![image](https://user-images.githubusercontent.com/127037803/224487079-119e1c85-0449-4020-95f3-9cfa2205f9ee.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224487079-119e1c85-0449-4020-95f3-9cfa2205f9ee.png)
 - The result is a model (blue line) that appears to have no problem distinguishing between the two classes. Although it is not perfect (score 1), it clearly outperforms the random classifier (green line).
 
 ## Concolusion

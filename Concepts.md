@@ -25,7 +25,7 @@
 - Bagging is a concept used in the Random Forrest algorithm, where it trains base learners from independently bootstrapped subsets of the dataset. In contrast to bagging, where all base learners are trained simultaneously, boosting trains the base learners sequentially, making trees learn from the mistake of previous trees
 - The entire process can be summarized by this image:
 
-![image](https://user-images.githubusercontent.com/127037803/224346951-9fa02b57-ac9b-4db7-9e4b-7d898453516d.png)
+  ![image](https://user-images.githubusercontent.com/127037803/224346951-9fa02b57-ac9b-4db7-9e4b-7d898453516d.png)
 - To begin with, the loss function must be defined. In the case of classification, cross-entropy is used    
 
     $$L_C=-(y_i\log(p)+(1-y_i)\log(1-p))$$
@@ -51,12 +51,12 @@
     
     $$-\sum_{i=1}^ny_i+np=0\\\\np=\sum_{i=1}^ny_i\\\\p=1/n\sum_{i=1}^ny_i=\bar y$$
     
-- In a binary classification problem *y* can either be 0 or 1. So, the mean of ***y,*** in this case, is actually the proportion of 1. As $\gamma$  is the log of odds instead of the probability *p*, it must be converted to arrive at the first prediction
+- In a binary classification problem *y* can either be 0 or 1. So, the mean of *y,* in this case, is actually the proportion of 1. As $\gamma$  is the log of odds instead of the probability *p*, it must be converted to arrive at the first prediction
     
     $$F_0(x)=\dot y=\log(\frac{\bar y}{1-\bar y})$$
     
-- The following steps are iterated **M**  times, where *M* denotes the number of trees created and *m* represents the index of each tree. So with the first prediction at hand, compute the effect that the prediction has on the loss function
-- This is done by taking the derivative of the loss function with respect to the previous prediction $F_{m-1}$ and multiplying it by -1. As with regression, this results in what is known to as the residuals
+- The following steps are iterated *M*  times, where *M* denotes the number of trees created and *m* represents the index of each tree. So with the first prediction at hand, compute the effect that the prediction has on the loss function
+- This is done by taking the derivative of the loss function with respect to the previous prediction $F_{m-1}$ and multiplying it by -1. This results in what is known to as the residuals
 
 $$r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(x)}$$
     
@@ -69,9 +69,9 @@ $$r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(
 
 $$\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamma)\\\\=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^{F_{m-1}(x_i+\gamma})\Big)$$
 
-- Training the regression tree results in $R_{j, m}$ for $j=1, ...,J_m$, where **R** is the subset of samples that are assigned to (or predicted to be) at *j (the* terminal node; i.e., a leave in the tree) and at **m (**the tree index). *J* is the total number of leaves
-- A value $\gamma$ is needed that minimizes the loss function on each terminal node *j*. The $\sum_{x_i\in R_{j, m}}^n$term means that the loss is aggregated on all samples that belong to the subset *R* at terminal node *j*
-- The best value for $\gamma$ is found by taking the derivative of the previous equation, However, solving this equation is very difficult so an approximation of the lost function using the second-order Taylor polynomial is done instead
+- Training the regression tree results in $R_{j, m}$ for $j=1, ...,J_m$, where *R* is the subset of samples that are assigned to (or predicted to be) at *j (the* terminal node; i.e., a leave in the tree) at tree index *m*. *J* is the total number of leaves
+- A value $\gamma$ is needed that minimizes the loss function on each terminal node *j*. The $\sum_{x_i\in R_{j, m}}$ term means that the loss is aggregated on all samples that belong to the subset *R* at terminal node *j*
+- The best value for $\gamma$ is found by taking the derivative of the previous equation, However, solving this equation is very difficult so an approximation of the loss function using the second-order Taylor polynomial is done instead
 - The second-order Taylor polynomial is used to approximate a function around a given point (in this case, the current model’s predictions) using its first and second derivative. This simplifies the computation done and the loss function is now being replaced by an approximation of it
     
     $$L(y_i, F_{m-1}(x_i)+\gamma)\approx L(y_i, F_{m-1}(x_i))+\frac{\delta}{\delta F}L(y_i, F_{m-1}(x_i))\gamma+1/2\frac{\delta²}{\delta F²}L(y_i, F_{m-1}(x_i))\gamma$$
@@ -89,7 +89,7 @@ $$\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamm
     
     $$F_m(x)=F_{m-1}(x)+v\sum_{j=1}^{J_m}\gamma_{j, m}1(x\in R_{j, m})$$
     
-- The $\gamma_{j, m}1(x\in R_{j, m})$ term means that the value $\gamma$ is picked if a given sample *x* falls in the subset of *R*. As all terminal nodes are exclusive, any given sample falls into only a single terminal node and the corresponding $\gamma$  value is added to the previous prediction to make up the new
+- The $\gamma_{j, m}1(x\in R_{j, m})$ term means that the value $\gamma$ is picked if a given sample *x* falls in the subset *R*. As all terminal nodes are exclusive, any given sample falls into only a single terminal node and the corresponding $\gamma$  value is added to the previous prediction to make up the new
 - The *v* is the learning rate that controls the degree of contribution of the $\gamma$  prediction to the new, updated prediction $F_m$
 - The idea is to add many more trees that all add up to many small steps, getting closer to the observed target variable and resulting in lower variance. To add new trees, the whole process starts from the beginning, but this time using the new predicted value for calculating the new residuals
 

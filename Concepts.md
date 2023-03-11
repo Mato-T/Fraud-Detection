@@ -3,7 +3,7 @@
 - Correlation values are bound between values of -1 and +1. The bigger the number, the more positive is the relationship. The smaller the number, the more negative is the relationship. A value close to 0 signals no relationship at all
 - In my analysis, I have included both Pearson's and Spearman's correlation coefficients. Pearson measures the linear correlation between two continuous variables and is defined as 
 
-  $$r = \frac{\sum(x_i -\bar x)(y_i - \bar y)} {\sqrt{\sum(x_i - \bar x)² \sum(y_i - \bar y)²}}$$
+  $$r = \frac{\sum(x_i -\bar x)(y_i - \bar y)} {\sqrt{\sum(x_i - \bar x)²\sum(y_i - \bar y)²}}$$
  
 - The numerator is simply the covariance that measures the joint variability of the two variables, while the denominator scales the variability by multiplying the standard deviations of the individual variables
 - Spearman, on the other hand, transforms the numeric values into rankings and then correlates the rankings, thus minimizing the influence of any nonlinear relationship between the two variables under scrutiny. It is defined as:
@@ -44,12 +44,16 @@
     
 - Now, find $\gamma$ that minimizes the sum of losses by taking the derivative of the sum of losses with respect to $\gamma$. Note that $\gamma$ is still assumed to be the log of odds
     
-    $$\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^nL=\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^n\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\\\=-\sum_{i=1}^ny_i+n\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\\\=-\sum_{i=1}^ny_i+np$$
+    $$\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^nL=\frac{\delta}{\delta\log(\text{odds})}\sum_{i=1}^n\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]$$
+    $$=-\sum_{i=1}^ny_i+n\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}$$
+    $$=-\sum_{i=1}^ny_i+np$$
     
 - To take the derivative of the loss functions, simply use the chain rule (derivative of the nesting expression times the derivative of the nested expression). Note that the fraction is actually defined to be *p* so it can be replaced to arrive at the final solution
 - Now, to find the critical value, set the solution equal to 0 and solve for *p*. The result will be the optimal value *p* that minimizes the loss function (loss equal to 0)
     
-    $$-\sum_{i=1}^ny_i+np=0\\\\np=\sum_{i=1}^ny_i\\\\p=1/n\sum_{i=1}^ny_i=\bar y$$
+    $$-\sum_{i=1}^ny_i+np=0$$
+    $$np=\sum_{i=1}^ny_i$$
+    $$p=1/n\sum_{i=1}^ny_i=\bar y$$
     
 - In a binary classification problem *y* can either be 0 or 1. So, the mean of *y,* in this case, is actually the proportion of 1. As $\gamma$  is the log of odds instead of the probability *p*, it must be converted to arrive at the first prediction
     
@@ -62,12 +66,15 @@ $$r_{i,m}=-\Big[\frac{\delta L(y_i, F(x_i))}{\delta F(x_i)}\Big ]_{F(x)=F_{m-1}(
     
 - The residuals are computed for each single sample *i*. The gradient provides guidance on the directions (+/-) and the magnitude in which the loss function can be minimized by altering the prediction. Now, substituting for the actual loss function:
     
-    $$r_{i, m}=\frac{\delta}{\delta\log(\text{odds})}\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]\\\\=y_i-\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}\\\\=y_i-p$$
+    $$r_{i, m}=\frac{\delta}{\delta\log(\text{odds})}\Big[y_i\log(\text{odds})-\log(1+e^{\log(\text{odds})})\Big]$$
+    $$=y_i-\frac{e^{\log(\text{odds})}}{1+e^{\log(\text{odds})}}$$
+    $$=y_i-p$$
     
 - Again, the derivative results in the difference between the target variable and the log of odds, which is why *r* is called residuals
 - Now, a regression tree is used with all *x* features to predict the residual. The training data can be run down the first tree and the resulting prediction gets then added to previous prediction. The sum of these two values result in the new predicted target variable
 
-$$\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamma)\\\\=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^{F_{m-1}(x_i+\gamma})\Big)$$
+$$\gamma_{j, m}=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^nL(y_i, F_{m-1}(x_i)+\gamma)$$
+$$=argmin_{\gamma}\sum_{x_i\in R_{j, m}}^n-\Big(y_iF_{m-1}(x_i+\gamma)-\log(1+e^{F_{m-1}(x_i+\gamma})\Big)$$
 
 - Training the regression tree results in $R_{j, m}$ for $j=1, ...,J_m$, where *R* is the subset of samples that are assigned to (or predicted to be) at *j (the* terminal node; i.e., a leave in the tree) at tree index *m*. *J* is the total number of leaves
 - A value $\gamma$ is needed that minimizes the loss function on each terminal node *j*. The $\sum_{x_i\in R_{j, m}}$ term means that the loss is aggregated on all samples that belong to the subset *R* at terminal node *j*

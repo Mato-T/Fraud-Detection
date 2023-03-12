@@ -38,7 +38,7 @@
   ![image](https://user-images.githubusercontent.com/127037803/224015017-c4166524-a1ed-4f3d-ae00-188e707e94f8.png)
   ![image](https://user-images.githubusercontent.com/127037803/224012311-37943629-dc95-44aa-ba6f-e8ee3dc28fe2.png)
 ## Preprocessing for Training
-- The second part of the preprocessing is used to prepare the data for the model. The first thing to do is to remove all irrelevant features. I also excluded all personal information such as home address, name, etc. to protect the identity of the people involved (even if they were artificially created).
+- The second part of the preprocessing is used to prepare the data for the model. I remove all irrelevant features and also excluded all personal information such as home address, name, etc. to protect the identity of the people involved (even if they were artificially created).
 - I also removed most information about time, such as month or year, as I saw no reason to believe that there was a "credit card theft season" (the correlation supports this point). I did include the hour and unix time as they seem to be correlated to the target variable.
 - An important aspect of choosing a model is to make sure that the target class of the data set is balanced.
 

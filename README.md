@@ -60,7 +60,7 @@
   ![image](https://user-images.githubusercontent.com/127037803/224487079-119e1c85-0449-4020-95f3-9cfa2205f9ee.png)
 - The result is a model (blue line) that appears to have no problem distinguishing between the two classes. Although it is not perfect (score 1), it clearly outperforms the random classifier (green line).
 
-## Concolusion
+## Conclusion
 - In summary, this project really helped me develop my data analysis skills, as I had to look more closely at each feature and decide if it provides valuable information or was somehow correlated with the target variable.
 - For example, I added the time difference of transactions that fall in the same month and were made with the same credit card as a separate feature (commented out after the plot), which greatly improved the model (100% for all scores for test and training). However, I removed it because I don't think it represents real-world behaviour since making several transactions in a short time span is no reason to suspect fraudulent activities. In addition, no regularization technique (such as scaling or minimum cost complexity pruning) helped reduce overfitting, so I decided to simply use the Unix time instead.
 - It also allowed me to address the imbalance problem more efficiently. I learned new methods of resampling (e.g., combining Tomek links and SMOTE) and which models worked best. I have included them in my notes so that I am better prepared for future problems like this one.

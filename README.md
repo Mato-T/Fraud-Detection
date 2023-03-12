@@ -53,7 +53,8 @@
 
 ## Performance Evaluation
 - As stated before, accuracy is not very suitable for performance evaluation, so I have included, once again, recall, precision, and the F1-score. In addition, a confusion matrix is used to display all mispredictions made by the model.
-- Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures teh ability of a binary classification model to distinguish between positive and negative classes.
+- While the recall and F1-score were close to 100% during training, it performed worse on the test data, indicating that it began to overfit to the training data. However, these metrics still yielded solid results with recall at 78%, precision at 88%, and the F1-score at 83%.
+- Another useful metric is Area Under the Receiver Operating Characteristic Curve (AUR-ROC). It measures the ability of a binary classification model to distinguish between positive and negative classes.
 
   ![image](https://user-images.githubusercontent.com/127037803/224487079-119e1c85-0449-4020-95f3-9cfa2205f9ee.png)
 - The result is a model (blue line) that appears to have no problem distinguishing between the two classes. Although it is not perfect (score 1), it clearly outperforms the random classifier (green line).

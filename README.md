@@ -11,7 +11,7 @@
 - As a final pre-processing step, I converted the individual coordinates of the account holder's residence and the merchant's residence into a distance specification. This also facilitates the detection of correlations between the distance of the account holder and the merchant.
 ## Data Analysis
 - First, I wanted to check the correlation between each feature and the target variable. I included both Pearson and Spearman in case the dataset might be skewed. The reason for this is that Pearson assumes a linear relationship between the variables, while Spearman is better suited to capture non-linear (monotonic) relationships.
-- Since the data may be skewed, I selected some appropriate features to see if they were indeed point to such conclusions. I also used histograms to visualize my results. 
+- Since the data may be skewed, I selected some appropriate features to see if they indeed point to such conclusions. I also used histograms to visualize my results. 
 
   ![image](https://user-images.githubusercontent.com/127037803/224010269-cd2faf48-3f01-4e4c-8c70-3a8d6c1fdc35.png)
 - As seen in the graph, some of these features are skewed, i.e. there is an asymmetry of the data with respect to the mean. The *age* and *hour* features are only slightly skewed, while the *amount* feature is highly skewed.

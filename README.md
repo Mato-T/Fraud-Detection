@@ -49,7 +49,7 @@
 
 ## Building the Model
 - Since the dataset is very unbalanced, I decided to use the stratified KFold algorithm to ensure that each bin/split has the same proportion of positive and negative samples as the original dataset. I also used a combination of Tomek links and SMOTE to resample the training dataset.
-- I chose a gradient-boosting classifier as the model because it is an ensemble model (combining multiple weak learners) that can capture complex nonlinear relationships, has built-in sampling weights that focus on unclassified samples, and provides multiple hyperparameters such as learning rate and maximum depth to boost its performance (for more information, check out the Concept.md file).
+- I chose a gradient-boosting classifier as the model, which is an ensemble model that combines several weak classifiers to make a final prediction. In a nutshell, it sequentially trains decision trees that learn from the mistakes made by previous trees, allowing it to capture complex nonlinear relationships (for more information, check out the Concept.md file).
 - Using simple majority class prediction would achieve 99% accuracy due to imbalance; therefore, accuracy is not a very good performance measure. Recall and the F1 score are used instead.
 
 ## Performance Evaluation
